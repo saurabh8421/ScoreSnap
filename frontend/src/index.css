@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap'); */
+
+.font-orbitron {
+  font-family: 'Orbitron', sans-serif;
+}
+
+
+.text-brandGreen {
+  color: #059669; /* Tailwind green-600 */
+}
