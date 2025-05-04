@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 5000;
 
 // Allow requests from your frontend (adjust for production domain later)
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://your-frontend-domain.com'],
+  origin: ['http://localhost:5173', 'https://score-snap-cyan.vercel.app/'],
   methods: ['GET'],
   allowedHeaders: ['Content-Type']
 }));
