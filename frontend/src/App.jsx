@@ -18,7 +18,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`https://scoresnap-production.up.railway.app/scrape?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`http://localhost:5000/scrape?url=${encodeURIComponent(url)}`);
       const result = await res.json();
       result.success
         ? (setScrapedData(result.data), setAllSectionStats(result.allSectionStats))
@@ -86,7 +86,7 @@ function App() {
           {!loading && !error && Object.keys(scrapedData).length > 0 ? (
             <div ref={reportRef} className='p-8'>
               {/* Personal Info Card */}
-              <div className="bg-white shadow-lg rounded-xl mb-10 overflow-hidden border">
+              <div className="bg-white shadow-lg rounded-xl sm:min-w-9 mb-10 overflow-hidden border">
                 <div className="px-6 py-4 border-b bg-blue-100">
                   <h3 className="text-xl font-semibold text-gray-800">👤 Personal / Test Info</h3>
                 </div>

@@ -8,7 +8,7 @@ const app = express();
 const PORT = 5000;
 
 app.use(cors({
-  origin: "https://score-snap-cyan.vercel.app", // frontend origin (Vercel)
+  origin: "https://score-snap-cyan.vercel.app"||"http://localhost:5000", // frontend origin (Vercel)
   methods: ["GET", "POST"],
   credentials: true
 }));
