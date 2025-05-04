@@ -7,7 +7,23 @@ require('dotenv').config();
 const app = express();
 const PORT = 5000;
 
-app.use(cors());
+app.use(cors({
+  origin: function(origin, callback) {
+    const allowedOrigins = [
+      "https://score-snap-cyan.vercel.app",  // Vercel app
+      "http://localhost:5173"                // Local development server
+    ];
+    
+    if (allowedOrigins.includes(origin) || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST"],
+  credentials: true
+}));
+
 
 const SCRAPER_API_KEY = process.env.SCRAPER_API_KEY;
 
