@@ -27,26 +27,14 @@ app.use(cors({
 
 // ✅ Scraping endpoint
 app.get('/scrape', async (req, res) => {
+  const targetUrl = req.query.url;
+
+  if (!targetUrl) {
+    return res.status(400).json({ success: false, message: 'URL is required' });
+  }
+
   try {
-    const targetUrl = req.query.url;
-
-    if (!targetUrl) {
-      return res.status(400).json({ success: false, message: 'URL is required' });
-    }
-
-    try {
-      const response = await axios.get(targetUrl);
-      console.log('Fetched URL:', targetUrl);
-      console.log('Response status:', response.status);
-    } catch (error) {
-      console.error('Error scraping:', error.message);
-      if (error.response) {
-        console.error('Status:', error.response.status);
-        console.error('Headers:', error.response.headers);
-      }
-      res.status(500).json({ success: false, message: 'Failed to scrape data' });
-    }
-    
+    const response = await axios.get(targetUrl);
     const html = response.data;
     const $ = cheerio.load(html);
 
@@ -81,13 +69,20 @@ app.get('/scrape', async (req, res) => {
       };
     });
 
-    res.json({ success: true, data, allSectionStats });
+    return res.json({ success: true, data, allSectionStats });
 
   } catch (error) {
     console.error('Error scraping:', error.message);
-    res.status(500).json({ success: false, message: 'Failed to scrape data' });
+
+    if (error.response) {
+      console.error('Status:', error.response.status);
+      console.error('Headers:', error.response.headers);
+    }
+
+    return res.status(500).json({ success: false, message: 'Failed to scrape data' });
   }
 });
+
 
 // ✅ Start server
 app.listen(PORT, () => {
