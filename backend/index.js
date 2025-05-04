@@ -8,7 +8,8 @@ const PORT = 5000;
 
 
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://score-snap-cyan.vercel.app/'], // Adjust as needed
+  origin: ['http://localhost:5173', 'https://score-snap-cyan.vercel.app/'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Adjust as needed
   credentials: true
 }));
 
