@@ -19,7 +19,7 @@ app.get('/scrape', async (req, res) => {
 
     const response = await axios.get('http://api.scraperapi.com', {
       params: {
-        api_key: 'G3ozx5xtEqGAGi3VdsQGKGHxuwqSJDTn38vEUEREQweQ',
+        api_key: 'ef8226b9ea5d66388ffd2525f4c3f413',
         url: targetUrl
       }
     });
