@@ -7,11 +7,7 @@ require('dotenv').config();
 const app = express();
 const PORT = 5000;
 
-app.use(cors({
-  origin: "*", // frontend origin (Vercel)
-  methods: ["GET", "POST"],
-  credentials: true
-}));
+app.use(cors());
 
 const SCRAPER_API_KEY = process.env.SCRAPER_API_KEY;
 
