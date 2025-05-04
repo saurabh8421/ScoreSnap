@@ -17,7 +17,7 @@ app.get('/scrape', async (req, res) => {
       return res.status(400).json({ success: false, message: 'URL is required' });
     }
 
-    const response = await axios.get("https://rrb.digialm.com///per/g22/pub/1907/touchstone/AssessmentQPHTMLMode1//1907O256/1907O256S1D861/17454155934803027/213244170764949_1907O256S1D861E1.html");
+    const response = await axios.get("targetUrl");
     const html = response.data;
     const $ = cheerio.load(html);
 
