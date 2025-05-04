@@ -17,7 +17,13 @@ app.get('/scrape', async (req, res) => {
       return res.status(400).json({ success: false, message: 'URL is required' });
     }
 
-    const response = await axios.get(targetUrl);
+    const response = await axios.get(targetUrl, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/90.0.4430.212 Safari/537.36',
+        'Referer': targetUrl,
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9',
+      }
+    });
     const html = response.data;
     const $ = cheerio.load(html);
 
