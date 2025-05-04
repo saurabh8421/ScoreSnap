@@ -18,7 +18,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://localhost:5000/scrape?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`https://scoresnap-production.up.railway.app/scrape?url=${encodeURIComponent(url)}`);
       const result = await res.json();
       result.success
         ? (setScrapedData(result.data), setAllSectionStats(result.allSectionStats))
@@ -51,7 +51,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen min-w-fit flex  flex-col bg-gradient-to-br from-gray-50 to-blue-50">
       <Header/>
 
       {/* Main Content */}
@@ -86,20 +86,20 @@ function App() {
           {!loading && !error && Object.keys(scrapedData).length > 0 ? (
             <div ref={reportRef} className='p-8'>
               {/* Personal Info Card */}
-              <div className="bg-white shadow-lg rounded-xl sm:min-w-9 mb-10 overflow-hidden border">
+              <div className="bg-white shadow-lg rounded-xl mb-10 overflow-hidden border">
                 <div className="px-6 py-4 border-b bg-blue-100">
                   <h3 className="text-xl font-semibold text-gray-800">👤 Personal / Test Info</h3>
                 </div>
-                <ul className="divide-y text-sm">
+                <table className="divide-y text-sm">
                   {Object.entries(scrapedData)
                     .filter(([k]) => !k.toLowerCase().includes('photograph'))
                     .map(([key, val]) => (
-                      <li key={key} className="px-6 py-3 flex justify-between">
-                        <span className="font-medium text-gray-600">{key}</span>
-                        <span className="text-gray-800">{val}</span>
-                      </li>
+                      <tr key={key} className="px-6 py-3 flex justify-between">
+                        <td className="font-medium text-gray-600 min-w-40" >{key}</td>
+                        <td className="text-gray-800">{val}</td>
+                      </tr>
                     ))}
-                </ul>
+                </table>
               </div>
 
               {/* Section Stats Card */}
