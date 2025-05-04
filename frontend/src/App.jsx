@@ -51,7 +51,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen min-w-fit flex  flex-col bg-gradient-to-br from-gray-50 to-blue-50">
+    <div className="min-h-screen min-w-fit flex flex-col bg-gradient-to-br from-gray-50 to-blue-50">
       <Header/>
 
       {/* Main Content */}
@@ -90,16 +90,16 @@ function App() {
                 <div className="px-6 py-4 border-b bg-blue-100">
                   <h3 className="text-xl font-semibold text-gray-800">👤 Personal / Test Info</h3>
                 </div>
-                <table className="divide-y text-sm">
+                <ul className="divide-y text-sm">
                   {Object.entries(scrapedData)
                     .filter(([k]) => !k.toLowerCase().includes('photograph'))
                     .map(([key, val]) => (
-                      <tr key={key} className="px-6 py-3 flex justify-between">
-                        <td className="font-medium text-gray-600 min-w-40" >{key}</td>
-                        <td className="text-gray-800">{val}</td>
-                      </tr>
+                      <li key={key} className="px-6 py-3 flex justify-between">
+                        <span className="font-medium text-gray-600 min-w-40">{key}</span>
+                        <span className="text-gray-800">{val}</span>
+                      </li>
                     ))}
-                </table>
+                </ul>
               </div>
 
               {/* Section Stats Card */}
