@@ -34,13 +34,7 @@ app.get('/scrape', async (req, res) => {
   }
 
   try {
-    const response = await axios.get(targetUrl, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/90.0.4430.212 Safari/537.36',
-        'Accept-Language': 'en-US,en;q=0.9'
-      }
-    });
-    
+    const response = await axios.get(targetUrl);
     const html = response.data;
     const $ = cheerio.load(html);
 
