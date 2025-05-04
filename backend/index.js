@@ -55,7 +55,7 @@ app.get('/scrape', async (req, res) => {
     res.json({ success: true, data, allSectionStats });
 
   } catch (error) {
-    console.error('Error scraping:', error.message);
+    console.error(`Error scraping:${targetUrl}`, error.message);
     res.status(500).json({ success: false, message: 'Failed to scrape data' });
   }
 });
