@@ -18,7 +18,7 @@ function App() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch(`http://localhost:500/scrape?url=${encodeURIComponent(url)}`);
+      const res = await fetch(`https://scoresnap-1.onrender.com/scrape?url=${encodeURIComponent(url)}`);
       const result = await res.json();
       result.success
         ? (setScrapedData(result.data), setAllSectionStats(result.allSectionStats))

@@ -6,7 +6,11 @@ const cors = require('cors');
 const app = express();
 const PORT = 5000;
 
-app.use(cors());
+
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://score-snap-cyan.vercel.app/'], // Adjust as needed
+  credentials: true
+}));
 
 // Endpoint to scrape data from another webpage
 app.get('/scrape', async (req, res) => {
