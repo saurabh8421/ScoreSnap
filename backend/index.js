@@ -1,33 +1,38 @@
+require('dotenv').config(); // Load environment variables
+
 const express = require('express');
 const axios = require('axios');
 const cheerio = require('cheerio');
 const cors = require('cors');
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 app.use(cors({
-  origin: "https://score-snap-cyan.vercel.app", // or use '*' for all origins (less secure)
+  origin: "https://score-snap-cyan.vercel.app", // frontend origin (Vercel)
   methods: ["GET", "POST"],
   credentials: true
 }));
 
-// Endpoint to scrape data from another webpage
+const SCRAPER_API_KEY = process.env.SCRAPER_API_KEY;
+
 app.get('/scrape', async (req, res) => {
   try {
     const targetUrl = req.query.url;
-
     if (!targetUrl) {
       return res.status(400).json({ success: false, message: 'URL is required' });
     }
 
-    const response = await axios.get(targetUrl);
-    
+    // ScraperAPI request URL
+    const scraperUrl = `https://api.scraperapi.com?api_key=${SCRAPER_API_KEY}&url=${encodeURIComponent(targetUrl)}`;
+
+    const response = await axios.get(scraperUrl);
     const html = response.data;
     const $ = cheerio.load(html);
 
     const data = {};
 
+    // Extract basic info
     $('.main-info-pnl table tbody tr').each((i, element) => {
       const key = $(element).find('td').first().text().trim();
       const valueCell = $(element).find('td').last();
@@ -35,8 +40,8 @@ app.get('/scrape', async (req, res) => {
       data[key] = img.length > 0 ? img.attr('src') : valueCell.text().trim();
     });
 
+    // Extract section stats
     const allSectionStats = {};
-
     $('.section-lbl').each((index, section) => {
       let right = 0, wrong = 0, ignored = 0;
       const sectionTitle = $(section).text().trim() || `Section ${index + 1}`;
@@ -65,7 +70,6 @@ app.get('/scrape', async (req, res) => {
   }
 });
 
-
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`✅ Server running on http://localhost:${PORT}`);
 });
