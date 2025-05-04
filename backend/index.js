@@ -17,7 +17,7 @@ app.get('/scrape', async (req, res) => {
       return res.status(400).json({ success: false, message: 'URL is required' });
     }
 
-    const response = await axios.get("targetUrl");
+    const response = await axios.get(targetUrl);
     const html = response.data;
     const $ = cheerio.load(html);
 
@@ -55,7 +55,7 @@ app.get('/scrape', async (req, res) => {
     res.json({ success: true, data, allSectionStats });
 
   } catch (error) {
-    console.error(`Error scraping:${targetUrl}`, error.message);
+    console.error('Error scraping:', error.message);
     res.status(500).json({ success: false, message: 'Failed to scrape data' });
   }
 });
