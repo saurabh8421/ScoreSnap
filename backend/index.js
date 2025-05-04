@@ -7,19 +7,8 @@ require('dotenv').config();
 const app = express();
 const PORT = 5000;
 
-const allowedOrigins = [
-  "https://score-snap-cyan.vercel.app",
-  "http://localhost:5173"
-];
-
 app.use(cors({
-  origin: function(origin, callback) {
-    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: "*", // frontend origin (Vercel)
   methods: ["GET", "POST"],
   credentials: true
 }));
