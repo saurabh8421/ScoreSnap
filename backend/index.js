@@ -4,36 +4,19 @@ const cheerio = require('cheerio');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
-// ✅ CORS setup without trailing slash issues
-const allowedOrigins = [
-  'http://localhost:5173',
-  'https://score-snap-cyan.vercel.app'
-];
+app.use(cors());
 
-app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (like curl or Postman)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true
-}));
-
-// ✅ Scraping endpoint
+// Endpoint to scrape data from another webpage
 app.get('/scrape', async (req, res) => {
-  const targetUrl = req.query.url;
-
-  if (!targetUrl) {
-    return res.status(400).json({ success: false, message: 'URL is required' });
-  }
-
   try {
+    const targetUrl = req.query.url;
+
+    if (!targetUrl) {
+      return res.status(400).json({ success: false, message: 'URL is required' });
+    }
+
     const response = await axios.get(targetUrl);
     const html = response.data;
     const $ = cheerio.load(html);
@@ -69,22 +52,15 @@ app.get('/scrape', async (req, res) => {
       };
     });
 
-    return res.json({ success: true, data, allSectionStats });
+    res.json({ success: true, data, allSectionStats });
 
   } catch (error) {
     console.error('Error scraping:', error.message);
-
-    if (error.response) {
-      console.error('Status:', error.response.status);
-      console.error('Headers:', error.response.headers);
-    }
-
-    return res.status(500).json({ success: false, message: 'Failed to scrape data' });
+    res.status(500).json({ success: false, message: 'Failed to scrape data' });
   }
 });
 
 
-// ✅ Start server
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
