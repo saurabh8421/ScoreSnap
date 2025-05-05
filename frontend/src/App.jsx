@@ -14,7 +14,7 @@ function App() {
   const reportRef = useRef();
 
   const fetchScrapedData = async () => {
-    if (!url) return alert("Please enter a URL to scrape");
+    if (!url) return setError("Please enter a valid Answer Key URL");
     setLoading(true);
     setError(null);
     try {
@@ -160,13 +160,13 @@ function App() {
                 onClick={fetchScrapedData}
                 className="px-6 py-3 bg-blue-500 text-white rounded-lg shadow hover:bg-blue-600 transition"
               >
-                🔄 Refresh
+                Refresh
               </button>
               <button
                 onClick={downloadPDF}
                 className="px-6 py-3 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition"
               >
-                📥 Download PDF
+              Download PDF
               </button>
             </div>
           )}
